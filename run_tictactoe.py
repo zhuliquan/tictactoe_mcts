@@ -5,20 +5,15 @@
 from game import Game
 from mcts import MCTS
 from human import Human
-from game import player_o
-from game import player_x
 
 
 if __name__ == '__main__':
+    game = Game()
     human = Human()
     ai = MCTS()
     players = {0: ai, 1: human}
-    players_id = {ai: player_o, human: player_x}
-    winner2result = {player_o: ai, player_x: human}
 
-    turn = 0
-    Game.start_player = players_id[players[turn]]  # tip: 这一步一定要在game初始化之前
-    game = Game()
+    turn = 1
     while True:
         current_state = game.state
         action = players[turn].take_action(current_state)
@@ -30,7 +25,7 @@ if __name__ == '__main__':
         is_over, winner = game.game_result()
         if is_over:
             if winner:
-                print("winner {0}".format(winner2result[winner]))
+                print("winner {0}".format(players[turn]))
             else:
                 print("平局")
             break

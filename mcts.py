@@ -152,6 +152,7 @@ class MCTS:
         :return: 最优动作
         """
         self.root = Node(current_state, None)
-        self.simulation()
+
+        self.simulation(100)
         action, _ = self.root.select(0.0)
         return action

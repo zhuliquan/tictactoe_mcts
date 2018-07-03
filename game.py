@@ -23,6 +23,12 @@ class State:
         self.board = board.copy()
         self.player = player
 
+    def __eq__(self, other):
+        if (self.board == other.board).all() and self.player == other.player:
+            return True
+        else:
+            return False
+
     def get_available_actions(self):
         """
         感觉状态的局面返回可以落子的位置，这些位置称之为动作
