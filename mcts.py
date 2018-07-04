@@ -111,8 +111,10 @@ class Node:
 
 
 class MCTS:
-    def __init__(self):
-        self.root = None
+    def __init__(self, init_state):
+        self.root = Node(init_state, None)
+        self.current_node = self.root
+        self.simulation()  # 预先模拟
 
     def __str__(self):
         return "ai"
@@ -133,7 +135,7 @@ class MCTS:
         模拟过程中找到当前的叶子节点
         :return: 叶子节点
         """
-        current_node = self.root
+        current_node = self.current_node
         while True:
             is_over, _ = current_node.state.get_state_result()
             if is_over:
@@ -151,8 +153,14 @@ class MCTS:
         :param current_state: 当前的状态
         :return: 最优动作
         """
-        self.root = Node(current_state, None)
+        # 跳转到合适的状态
+        if not (current_state == self.current_node.state):
+            for child_node in self.current_node.children.values():
+                if child_node.state == current_state:
+                    self.current_node = child_node
+                    break
 
         self.simulation(100)
-        action, _ = self.root.select(0.0)
+        action, next_node = self.current_node.select(0.0)
+        self.current_node = next_node # 跳转到对手状态上
         return action

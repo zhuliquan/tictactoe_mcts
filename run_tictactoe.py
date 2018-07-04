@@ -10,7 +10,7 @@ from human import Human
 if __name__ == '__main__':
     game = Game()
     human = Human()
-    ai = MCTS()
+    ai = MCTS(game.state)
     players = {0: ai, 1: human}
 
     turn = 1
