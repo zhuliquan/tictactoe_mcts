@@ -116,7 +116,7 @@ class MCTS:
         self.current_node = None
 
     def __str__(self):
-        return "ai"
+        return "monte carlo tree search ai"
 
     def simulation(self, count=1000):
         """
