@@ -10,10 +10,10 @@ from human import Human
 if __name__ == '__main__':
     game = Game()
     human = Human()
-    ai = MCTS(game.state)
+    ai = MCTS()
     players = {0: ai, 1: human}
 
-    turn = 1
+    turn = 0
     while True:
         current_state = game.state
         action = players[turn].take_action(current_state)
@@ -32,4 +32,5 @@ if __name__ == '__main__':
 
         # 更新执棋方
         turn = (turn + 1) % 2
+
 

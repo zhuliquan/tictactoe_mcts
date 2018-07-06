@@ -111,10 +111,9 @@ class Node:
 
 
 class MCTS:
-    def __init__(self, init_state):
-        self.root = Node(init_state, None)
-        self.current_node = self.root
-        self.simulation()  # 预先模拟
+    def __init__(self):
+        self.root = None
+        self.current_node = None
 
     def __str__(self):
         return "ai"
@@ -153,14 +152,18 @@ class MCTS:
         :param current_state: 当前的状态
         :return: 最优动作
         """
-        # 跳转到合适的状态
-        if not (current_state == self.current_node.state):
-            for child_node in self.current_node.children.values():
+        if not self.root: # 第一次初始化
+            self.root = Node(current_state, None)
+            self.current_node = self.root
+        else:
+            for child_node in self.current_node.children.values():# 跳转到合适的状态
                 if child_node.state == current_state:
                     self.current_node = child_node
                     break
+            else:   # 游戏重新开始的情况下
+                self.current_node = self.root
 
-        self.simulation(100)
+        self.simulation(200)
         action, next_node = self.current_node.select(0.0)
         self.current_node = next_node # 跳转到对手状态上
         return action
