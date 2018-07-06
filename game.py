@@ -66,9 +66,16 @@ class State:
         return is_over, winner
 
     def get_next_state(self, action):
-        self.board[action] = self.player
-        self.player = get_opponent(self.player)
-        return self
+        """
+        根据动作返回一个新的状态
+        :param action: 动作
+        :return: 新的状态
+        """
+        next_board = self.board.copy()
+        next_board[action] = self.player
+        next_player = get_opponent(self.player)
+        next_state = State(next_board, next_player)
+        return next_state
 
 
 class Game:
@@ -111,7 +118,7 @@ class Game:
         :return: 新的状态
         """
         if action:
-            self.state.get_next_state(action)
+            self.state = self.state.get_next_state(action)
         return self.state
 
     def game_result(self):
